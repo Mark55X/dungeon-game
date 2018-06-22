@@ -1,7 +1,11 @@
 package com.onn.dungeongame.world;
 
 import java.io.*;
+import java.awt.*;
+import java.net.*;
 import com.onn.dungeongame.tiles.*;
+import com.onn.dungeongame.*;
+import com.onn.dungeongame.gfx.*;
 
 public class World {
     private int width;
@@ -10,7 +14,7 @@ public class World {
     private int playerY;
     private Tile[][] tiles;
 
-    public void loadWorld(String path) {
+    public void loadWorld(URL path) {
         try {
             // Load the world
 
@@ -29,13 +33,14 @@ public class World {
              * Every tile is defined by an ID number (see com.onn.dungeongame.tiles.Tile)
              */
             
-            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+            BufferedReader br = new BufferedReader(new InputStreamReader(path.openStream()));
             String content, line;
             StringBuilder sb = new StringBuilder();
 
             while((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
+            br.close();
 
             content = sb.toString();
 
@@ -61,12 +66,33 @@ public class World {
                     y++;
                 }
             }
+
+            System.out.println("There are " + (tokens.length - 4) + " tiles");
         } catch(IOException ex) {
             System.out.println("Failed to load world: " + ex.getMessage());
             System.exit(1);
         } catch(NumberFormatException|ArrayIndexOutOfBoundsException ex) {
             System.out.println("Invalid world format");
             System.exit(1);
+        }
+    }
+
+    public void tick() {
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
+                tiles[x][y].tick();
+            }
+        }
+    }
+
+    public void render(Graphics g) {
+        // Render stuff here
+        g.drawImage(Assets.world_background, 0, 0, Handler.getWidth(), Handler.getHeight(), null);
+
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                g.drawImage(tiles[x][y].getTexture(), x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT, Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
+            }
         }
     }
 }

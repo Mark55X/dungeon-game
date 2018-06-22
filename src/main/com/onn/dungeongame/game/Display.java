@@ -34,4 +34,12 @@ public class Display {
 		frame.pack();
 		frame.setVisible(true);
 	}
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
 }
