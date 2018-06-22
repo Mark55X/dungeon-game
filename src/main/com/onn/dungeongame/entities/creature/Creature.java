@@ -7,8 +7,6 @@ import com.onn.dungeongame.entities.*;
 
 public abstract class Creature extends Entity {
 
-	protected BufferedImage texture;
-
 	protected Dimension size;
 	protected int speed;
 	protected int health;

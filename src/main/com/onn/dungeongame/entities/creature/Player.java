@@ -2,8 +2,14 @@ package com.onn.dungeongame.entities.creature;
 
 import java.awt.*;
 import com.onn.dungeongame.gfx.*;
+import com.onn.dungeongame.animation.*;
 
 public class Player extends Creature {
+
+	private Animation up_walk_animation;
+	private Animation down_walk_animation;
+	private Animation left_walk_animation;
+	private Animation right_walk_animation;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -11,15 +17,21 @@ public class Player extends Creature {
 		bounds.y = 15;
 		bounds.width = 8;
 		bounds.height = 18;
-		texture = Assets.player;
+
+		up_walk_animation = new Animation(Assets.player_blue_up, 150, true);
+		down_walk_animation = new Animation(Assets.player_blue_down, 150, true);
+		left_walk_animation = new Animation(Assets.player_blue_left, 150, true);
+		right_walk_animation = new Animation(Assets.player_blue_right, 150, true);
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(texture, x, y, size.width, size.height, null);
+		g.drawImage(up_walk_animation.getImage(), x, y, size.width, size.height, null);
+	}
 
-		g.setColor(Color.red);
-		g.fillRect(x + bounds.x, y + bounds.y, bounds.width, bounds.height);
+	@Override
+	public void tick() {
+		up_walk_animation.tick();
 	}
 
 }

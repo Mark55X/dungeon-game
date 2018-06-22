@@ -7,17 +7,19 @@ import com.onn.dungeongame.*;
 import com.onn.dungeongame.gfx.*;
 import com.onn.dungeongame.world.*;
 import com.onn.dungeongame.entities.creature.*;
+import com.onn.dungeongame.input.*;
 
 public class Game implements Runnable {
 	private String title;
 	private int width;
 	private int height;
-	private Display display;
 	private Thread thread;
 	private boolean isRunning;
 
 	private World world;
 	private Player player;
+	private Display display;
+	private KeyInput keyInput;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -43,6 +45,8 @@ public class Game implements Runnable {
 		player = new Player(0, 0);
 		world.loadWorld(getClass().getResource("/worlds/level_1"));
 		display = new Display(title, width, height);
+		keyInput = new KeyInput();
+		display.getFrame().addKeyListener(keyInput);
 	}
 
 	@Override
@@ -86,6 +90,7 @@ public class Game implements Runnable {
 
 	private void tick() {
 		// Tick all objects here
+		keyInput.tick();
 		world.tick();
 		player.tick();
 	}
@@ -113,5 +118,9 @@ public class Game implements Runnable {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public KeyInput getKeyInput() {
+		return keyInput;
 	}
 }
