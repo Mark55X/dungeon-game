@@ -1,8 +1,11 @@
 package com.onn.dungeongame.entities.creature;
 
 import java.awt.*;
+import java.awt.image.*;
 import com.onn.dungeongame.gfx.*;
 import com.onn.dungeongame.animation.*;
+import com.onn.dungeongame.input.*;
+import com.onn.dungeongame.*;
 
 public class Player extends Creature {
 
@@ -10,6 +13,18 @@ public class Player extends Creature {
 	private Animation down_walk_animation;
 	private Animation left_walk_animation;
 	private Animation right_walk_animation;
+	private int lastMove;
+	/*
+	 * lastMove will be used to determine which texture to render
+	 * once the player has stopped move and is idle
+	 *
+	 * 0 -> up
+	 * 1 -> down
+	 * 2 -> left
+	 * 3 -> right
+	 */
+
+	private BufferedImage texture;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -18,20 +33,81 @@ public class Player extends Creature {
 		bounds.width = 8;
 		bounds.height = 18;
 
-		up_walk_animation = new Animation(Assets.player_blue_up, 150, true);
-		down_walk_animation = new Animation(Assets.player_blue_down, 150, true);
-		left_walk_animation = new Animation(Assets.player_blue_left, 150, true);
-		right_walk_animation = new Animation(Assets.player_blue_right, 150, true);
+		up_walk_animation = new Animation(Assets.player_blue_up, 50, true);
+		down_walk_animation = new Animation(Assets.player_blue_down, 50, true);
+		left_walk_animation = new Animation(Assets.player_blue_left, 50, true);
+		right_walk_animation = new Animation(Assets.player_blue_right, 50, true);
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(up_walk_animation.getImage(), x, y, size.width, size.height, null);
+		g.drawImage(texture, (int) (x - Handler.getCamera().getX()), (int) (y - Handler.getCamera().getY()), size.width, size.height, null);
 	}
 
 	@Override
 	public void tick() {
-		up_walk_animation.tick();
+		xMove = 0;
+		yMove = 0;
+		switch(lastMove) {
+		case 0:
+			texture = Assets.player_blue_up[1];
+			break;
+		case 1:
+			texture = Assets.player_blue_down[1];
+			break;
+		case 2:
+			texture = Assets.player_blue_left[1];
+			break;
+		case 3:
+			texture = Assets.player_blue_right[1];
+			break;
+		default:
+			System.out.println("[E] Invalid use of lastMove in class Player");
+			System.exit(1);
+		}
+
+		KeyInput input = Handler.getKeyInput();
+
+		if(input.up) {
+			up_walk_animation.tick();
+			texture = up_walk_animation.getImage();
+			lastMove = 0;
+			yMove = -speed;
+		}
+
+		if(input.down) {
+			down_walk_animation.tick();
+			texture = down_walk_animation.getImage();
+			lastMove = 1;
+			yMove = speed;
+		}
+
+		if(input.left) {
+			left_walk_animation.tick();
+			texture = left_walk_animation.getImage();
+			lastMove = 2;
+			xMove = -speed;
+		}
+
+		if(input.right) {
+			right_walk_animation.tick();
+			texture = right_walk_animation.getImage();
+			lastMove = 3;
+			xMove = speed;
+		}
+
+		moveX();
+		moveY();
+
+		Handler.getCamera().center(this);
+	}
+
+	private void moveX() {
+		x += xMove;
+	}
+
+	private void moveY() {
+		y += yMove;
 	}
 
 }

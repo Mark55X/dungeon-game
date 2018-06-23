@@ -7,11 +7,12 @@ import com.onn.dungeongame.entities.*;
 
 public abstract class Creature extends Entity {
 
-	protected Dimension size;
 	protected int speed;
 	protected int health;
 	protected int deffense;
 	protected int attack;
+	protected int yMove;
+	protected int xMove;
 
 	private static final int DEFAULT_SPEED = 3;
 	private static final int DEFAULT_WIDTH = 32;
@@ -44,10 +45,7 @@ public abstract class Creature extends Entity {
 		bounds.height = size.height;
 	}
 
-	public void tick() {
-
-	}
-
+	public abstract void tick();
 	public abstract void render(Graphics g);
 
 }

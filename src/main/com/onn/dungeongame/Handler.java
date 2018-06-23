@@ -2,6 +2,7 @@ package com.onn.dungeongame;
 
 import com.onn.dungeongame.game.*;
 import com.onn.dungeongame.input.*;
+import com.onn.dungeongame.camera.*;
 
 public class Handler {
 
@@ -21,6 +22,10 @@ public class Handler {
 
 	public static KeyInput getKeyInput() {
 		return game.getKeyInput();
+	}
+
+	public static Camera getCamera() {
+		return game.getCamera();
 	}
 
 }

@@ -8,6 +8,7 @@ import com.onn.dungeongame.gfx.*;
 import com.onn.dungeongame.world.*;
 import com.onn.dungeongame.entities.creature.*;
 import com.onn.dungeongame.input.*;
+import com.onn.dungeongame.camera.*;
 
 public class Game implements Runnable {
 	private String title;
@@ -20,6 +21,7 @@ public class Game implements Runnable {
 	private Player player;
 	private Display display;
 	private KeyInput keyInput;
+	private Camera camera;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -46,6 +48,7 @@ public class Game implements Runnable {
 		world.loadWorld(getClass().getResource("/worlds/level_1"));
 		display = new Display(title, width, height);
 		keyInput = new KeyInput();
+		camera = new Camera();
 		display.getFrame().addKeyListener(keyInput);
 	}
 
@@ -122,5 +125,9 @@ public class Game implements Runnable {
 
 	public KeyInput getKeyInput() {
 		return keyInput;
+	}
+
+	public Camera getCamera() {
+		return camera;
 	}
 }

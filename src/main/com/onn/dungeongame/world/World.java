@@ -6,6 +6,7 @@ import java.net.*;
 import com.onn.dungeongame.tiles.*;
 import com.onn.dungeongame.*;
 import com.onn.dungeongame.gfx.*;
+import com.onn.dungeongame.camera.*;
 
 public class World {
     private int width;
@@ -18,9 +19,9 @@ public class World {
         try {
             // Load the world
 
-            /* 
+            /*
              * The world format must be as following
-             * 
+             *
              * w h px py tiles...
              *
              * where:
@@ -32,7 +33,7 @@ public class World {
              *
              * Every tile is defined by an ID number (see com.onn.dungeongame.tiles.Tile)
              */
-            
+
             BufferedReader br = new BufferedReader(new InputStreamReader(path.openStream()));
             String content, line;
             StringBuilder sb = new StringBuilder();
@@ -52,7 +53,7 @@ public class World {
             playerY = Integer.parseInt(tokens[3]);
 
             tiles = new Tile[width][height];
-            
+
             int x = 0;
             int y = 0;
 
@@ -91,7 +92,7 @@ public class World {
 
         for(int y = 0; y < height; y++) {
             for(int x = 0; x < width; x++) {
-                g.drawImage(tiles[x][y].getTexture(), x * Tile.TILEWIDTH, y * Tile.TILEHEIGHT, Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
+                g.drawImage(tiles[x][y].getTexture(), (int) (x * Tile.TILEWIDTH - Handler.getCamera().getX()), (int) (y * Tile.TILEHEIGHT - Handler.getCamera().getY()), Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
             }
         }
     }
