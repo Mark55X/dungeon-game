@@ -28,4 +28,8 @@ public class Tile {
 
     }
 
+	public boolean isSolid() {
+		return false;
+	}
+
 }

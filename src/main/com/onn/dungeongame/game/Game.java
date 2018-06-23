@@ -130,4 +130,8 @@ public class Game implements Runnable {
 	public Camera getCamera() {
 		return camera;
 	}
+
+	public World getWorld() {
+		return world;
+	}
 }

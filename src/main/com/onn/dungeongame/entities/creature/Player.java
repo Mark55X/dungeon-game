@@ -5,6 +5,7 @@ import java.awt.image.*;
 import com.onn.dungeongame.gfx.*;
 import com.onn.dungeongame.animation.*;
 import com.onn.dungeongame.input.*;
+import com.onn.dungeongame.tiles.*;
 import com.onn.dungeongame.*;
 
 public class Player extends Creature {
@@ -103,11 +104,67 @@ public class Player extends Creature {
 	}
 
 	private void moveX() {
-		x += xMove;
+		if(xMove < 0) {
+			// Going onto the left, check collision on left
+
+			// Calculate where the player is going
+			int tx = (int) ((x + bounds.x + xMove) / Tile.TILEWIDTH);
+			int ty = (int) ((y + bounds.y) / Tile.TILEHEIGHT); // Upper left corner
+			int ty1 = (int) ((y + bounds.y + bounds.height) / Tile.TILEHEIGHT); // Bottom left corner
+
+			if(tx < 0 || tx >= Handler.getWorld().getWidth() || ty < 0 || ty >= Handler.getWorld().getHeight()) {
+				return;
+			}
+
+			if(!Handler.getWorld().getTile(tx, ty).isSolid() && !Handler.getWorld().getTile(tx, ty1).isSolid()) {
+				x += xMove;
+			}
+
+		} else {
+			// Going onto the right, check collision on right
+
+			int tx = (int) ((x + bounds.x + bounds.width + xMove) / Tile.TILEWIDTH);
+			int ty = (int) ((y + bounds.y) / Tile.TILEWIDTH); // Upper right corner
+			int ty1 = (int) ((y + bounds.y + bounds.height) / Tile.TILEHEIGHT); // Bottom right corner
+
+			if(tx < 0 || tx >= Handler.getWorld().getWidth() || ty < 0 || ty >= Handler.getWorld().getHeight()) {
+				return;
+			}
+
+			if(!Handler.getWorld().getTile(tx, ty).isSolid() && !Handler.getWorld().getTile(tx, ty1).isSolid()) {
+				x += xMove;
+			}
+		}
 	}
 
 	private void moveY() {
-		y += yMove;
+		if(yMove < 0) {
+			// Calculate where the player is going
+			int tx = (int) ((x + bounds.x) / Tile.TILEWIDTH);
+			int tx1 = (int) ((x + bounds.x + bounds.width) / Tile.TILEWIDTH);
+			int ty = (int) ((y + bounds.y + yMove) / Tile.TILEHEIGHT);
+
+			if(tx < 0 || tx >= Handler.getWorld().getWidth() || ty < 0 || ty >= Handler.getWorld().getHeight()) {
+				return;
+			}
+
+			if(!Handler.getWorld().getTile(tx, ty).isSolid() && !Handler.getWorld().getTile(tx1, ty).isSolid()) {
+				y += yMove;
+			}
+
+		} else {
+			int tx = (int) ((x + bounds.x + bounds.width) / Tile.TILEWIDTH);
+			int tx1 = (int) ((x + bounds.x + bounds.width) / Tile.TILEWIDTH);
+			int ty = (int) ((y + bounds.y + yMove + bounds.height) / Tile.TILEHEIGHT);
+
+			if(tx < 0 || tx >= Handler.getWorld().getWidth() || ty < 0 || ty >= Handler.getWorld().getHeight()) {
+				return;
+			}
+
+			if(!Handler.getWorld().getTile(tx, ty).isSolid() && !Handler.getWorld().getTile(tx1, ty).isSolid()) {
+				y += yMove;
+			}
+		}
 	}
 
 }

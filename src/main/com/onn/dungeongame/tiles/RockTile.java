@@ -9,4 +9,9 @@ public class RockTile extends Tile {
         texture = Assets.rock_1;
     }
 
+	@Override
+	public boolean isSolid() {
+		return true;
+	}
+
 }

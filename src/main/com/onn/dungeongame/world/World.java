@@ -96,4 +96,16 @@ public class World {
             }
         }
     }
+
+	public Tile getTile(int x, int y) {
+		return tiles[x][y];
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
 }
