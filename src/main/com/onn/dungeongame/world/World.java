@@ -7,6 +7,9 @@ import com.onn.dungeongame.tiles.*;
 import com.onn.dungeongame.*;
 import com.onn.dungeongame.gfx.*;
 import com.onn.dungeongame.camera.*;
+import java.util.*;
+import com.onn.dungeongame.entities.*;
+import com.onn.dungeongame.entities.statics.*;
 
 public class World {
     private int width;
@@ -14,8 +17,15 @@ public class World {
     private int playerX;
     private int playerY;
     private Tile[][] tiles;
+	private EntityManager entityManager;
+
+	private void init() {
+		entityManager = new EntityManager();
+	}
 
     public void loadWorld(URL path) {
+		init();
+
         try {
             // Load the world
 
@@ -57,8 +67,9 @@ public class World {
             int x = 0;
             int y = 0;
 
+			int i = 0;
             // From now on get the tiles
-            for(int i = 4; i < tokens.length; i++) {
+            for(i = 4; i < tokens.length; i++) {
                 tiles[x][y] = Tile.tiles[Integer.parseInt(tokens[i])];
                 x++;
 
@@ -66,9 +77,14 @@ public class World {
                     x = 0;
                     y++;
                 }
+
+				if(y == height) {
+					break;
+				}
             }
 
-            System.out.println("There are " + (tokens.length - 4) + " tiles");
+			Handler.getPlayer().setX(playerX);
+			Handler.getPlayer().setY(playerY);
         } catch(IOException ex) {
             System.out.println("Failed to load world: " + ex.getMessage());
             System.exit(1);
@@ -84,17 +100,26 @@ public class World {
                 tiles[x][y].tick();
             }
         }
+
+		entityManager.tick();
     }
 
     public void render(Graphics g) {
         // Render stuff here
         g.drawImage(Assets.world_background, 0, 0, Handler.getWidth(), Handler.getHeight(), null);
 
-        for(int y = 0; y < height; y++) {
-            for(int x = 0; x < width; x++) {
+		int xs = Math.max(0, (int) (Handler.getCamera().getX() / Tile.TILEWIDTH));
+		int xe = Math.min(width, (int) (Handler.getCamera().getX() + Handler.getWidth()) / Tile.TILEWIDTH + 1); // x end (rendering)
+		int ys = Math.max(0, (int) (Handler.getCamera().getY() / Tile.TILEHEIGHT)); // y start (rendering)
+		int ye = Math.min(height, (int) (Handler.getCamera().getY() + Handler.getHeight()) / Tile.TILEHEIGHT + 1); // y end (rendering)
+
+        for(int y = ys; y < ye; y++) {
+            for(int x = xs; x < xe; x++) {
                 g.drawImage(tiles[x][y].getTexture(), (int) (x * Tile.TILEWIDTH - Handler.getCamera().getX()), (int) (y * Tile.TILEHEIGHT - Handler.getCamera().getY()), Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
             }
         }
+
+		entityManager.render(g);
     }
 
 	public Tile getTile(int x, int y) {
@@ -107,5 +132,9 @@ public class World {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 }

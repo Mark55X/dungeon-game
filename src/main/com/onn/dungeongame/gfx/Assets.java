@@ -3,16 +3,33 @@ package com.onn.dungeongame.gfx;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
+import com.onn.dungeongame.util.*;
 
 public class Assets {
 
     private static BufferedImage sheet;
 	private static BufferedImage player_sheet;
+	private static BufferedImage sheet2;
+	private static BufferedImage miscSheet;
 
     public static BufferedImage rock_1;
     public static BufferedImage grass_1;
     public static BufferedImage sand_1;
 	public static BufferedImage dirt_1;
+	public static BufferedImage wall_left_1;
+	public static BufferedImage wall_right_1;
+	public static BufferedImage wall_top_1;
+	public static BufferedImage wall_bottom_1;
+	public static BufferedImage wall_vertical_continuation_1;
+	public static BufferedImage wall_horizontal_continuation_1;
+	public static BufferedImage cobblestone_mossy_1;
+	public static BufferedImage cobblestone_floor_1;
+	public static BufferedImage blank;
+	public static BufferedImage wine_bottle_1;
+	public static BufferedImage wine_bottle_2;
+	public static BufferedImage wine_bottle_3;
+	public static BufferedImage wine_bottle_4;
+
 	public static BufferedImage world_background;
 
 	public static BufferedImage[] player_blue_up;
@@ -32,11 +49,26 @@ public class Assets {
         sheet = load("/drawable/sheet.png");
         player_sheet = load("/drawable/player_sheet.png");
         world_background = load("/drawable/world_background.png");
+		miscSheet = load("/drawable/misc.png");
+		sheet2 = load("/drawable/sheet2.png");
 
+		wall_left_1 = crop2(2, 5);
+		wall_right_1 = Utils.rotateCw(Utils.rotateCw(wall_left_1));
+		wall_top_1 = crop2(4, 6);
+		wall_bottom_1 = crop2(6, 6);
+		wall_vertical_continuation_1 = crop2(5, 6);
+		wall_horizontal_continuation_1 = crop2(7, 5);
         rock_1 = crop(60, 4);
         grass_1 = crop(15, 9);
         sand_1 = crop(3, 4);
         dirt_1 = crop(10, 7);
+		cobblestone_mossy_1 = crop(22, 4);
+		cobblestone_floor_1 = crop(22, 14);
+		blank = crop2(28, 9);
+		wine_bottle_1 = cropMisc(0, 1);
+		wine_bottle_2 = cropMisc(1, 2);
+		wine_bottle_3 = cropMisc(2, 3);
+		wine_bottle_4 = cropMisc(5, 3);
 
 		player_blue_up = new BufferedImage[3];
 		player_blue_up[0] = cropPlayer(0, 3);
@@ -76,6 +108,14 @@ public class Assets {
 
 	private static BufferedImage cropPlayer(int x, int y) {
 		return player_sheet.getSubimage(x * PLAYERWIDTH, y * PLAYERHEIGHT, PLAYERWIDTH, PLAYERHEIGHT);
+	}
+
+	private static BufferedImage crop2(int x, int y) {
+		return sheet2.getSubimage(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+	}
+
+	private static BufferedImage cropMisc(int x, int y) {
+		return miscSheet.getSubimage(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
 	}
 
 }

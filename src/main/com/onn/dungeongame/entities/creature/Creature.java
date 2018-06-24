@@ -20,8 +20,6 @@ public abstract class Creature extends Entity {
 	private static final int DEFAULT_HEALTH = 100;
 	private static final int DEFAULT_DEFFENSE = 3;
 	private static final int DEFAULT_ATTACK = 3;
-
-	protected Rectangle bounds; // Every creature must have this, just for collision detection purposes
 	/*
 	 * Bounds will be the area of the creature that will be checked for collision
 	 * Since the player textures are not perfect, that means that there are white spaces

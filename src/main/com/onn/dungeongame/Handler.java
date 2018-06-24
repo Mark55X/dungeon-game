@@ -4,6 +4,7 @@ import com.onn.dungeongame.game.*;
 import com.onn.dungeongame.input.*;
 import com.onn.dungeongame.camera.*;
 import com.onn.dungeongame.world.*;
+import com.onn.dungeongame.entities.creature.*;
 
 public class Handler {
 
@@ -31,6 +32,10 @@ public class Handler {
 
 	public static World getWorld() {
 		return game.getWorld();
+	}
+
+	public static Player getPlayer() {
+		return game.getPlayer();
 	}
 
 }

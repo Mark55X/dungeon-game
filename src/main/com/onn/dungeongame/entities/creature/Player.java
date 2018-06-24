@@ -14,7 +14,7 @@ public class Player extends Creature {
 	private Animation down_walk_animation;
 	private Animation left_walk_animation;
 	private Animation right_walk_animation;
-	private int lastMove;
+	private int lastMove = 3;
 	/*
 	 * lastMove will be used to determine which texture to render
 	 * once the player has stopped move and is idle
@@ -97,8 +97,13 @@ public class Player extends Creature {
 			xMove = speed;
 		}
 
-		moveX();
-		moveY();
+		if(!collides(xMove, 0f)) {
+			moveX();
+		}
+
+		if(!collides(0f, yMove)) {
+			moveY();
+		}
 
 		Handler.getCamera().center(this);
 	}
@@ -165,6 +170,14 @@ public class Player extends Creature {
 				y += yMove;
 			}
 		}
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 
 }
