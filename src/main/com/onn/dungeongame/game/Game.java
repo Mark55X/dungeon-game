@@ -9,6 +9,7 @@ import com.onn.dungeongame.world.*;
 import com.onn.dungeongame.entities.creature.*;
 import com.onn.dungeongame.input.*;
 import com.onn.dungeongame.camera.*;
+import com.onn.dungeongame.states.*;
 
 public class Game implements Runnable {
 	private String title;
@@ -17,11 +18,11 @@ public class Game implements Runnable {
 	private Thread thread;
 	private boolean isRunning;
 
-	private World world;
-	private Player player;
 	private Display display;
 	private KeyInput keyInput;
 	private Camera camera;
+
+	private State playState;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -43,13 +44,12 @@ public class Game implements Runnable {
 	private void init() {
 		Assets.init();
 		Handler.init(this);
-		world = new World();
-		player = new Player(0, 0);
-		world.loadWorld(getClass().getResource("/worlds/level_1"));
 		display = new Display(title, width, height);
 		keyInput = new KeyInput();
 		camera = new Camera();
 		display.getFrame().addKeyListener(keyInput);
+		playState = new PlayState();
+		State.setState(playState);
 	}
 
 	@Override
@@ -94,7 +94,10 @@ public class Game implements Runnable {
 	private void tick() {
 		// Tick all objects here
 		keyInput.tick();
-		world.tick();
+
+		if(State.getState() != null) {
+			State.getState().tick();
+		}
 	}
 
 	private void render() {
@@ -107,7 +110,9 @@ public class Game implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 
-		world.render(g);
+		if(State.getState() != null) {
+			State.getState().render(g);
+		}
 
 		bs.show();
 		g.dispose();
@@ -127,13 +132,5 @@ public class Game implements Runnable {
 
 	public Camera getCamera() {
 		return camera;
-	}
-
-	public World getWorld() {
-		return world;
-	}
-
-	public Player getPlayer() {
-		return player;
 	}
 }

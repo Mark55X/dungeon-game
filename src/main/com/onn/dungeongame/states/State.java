@@ -2,12 +2,12 @@ package com.onn.dungeongame.states;
 
 import java.awt.*;
 
-public abstract State {
+public abstract class State {
 
 	public static State state;
 
-	public static void setState(State state) {
-		this.state = state;
+	public static void setState(State arg0) {
+		state = arg0;
 	}
 
 	public static State getState() {

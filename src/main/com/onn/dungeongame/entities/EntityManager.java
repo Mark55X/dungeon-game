@@ -8,7 +8,6 @@ import com.onn.dungeongame.*;
 import com.onn.dungeongame.entities.statics.*;
 
 public class EntityManager {
-	private Player player;
 	private ArrayList<Entity> entities;
 	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
 		@Override
@@ -24,9 +23,7 @@ public class EntityManager {
 	protected Rectangle bounds;
 
 	public EntityManager() {
-		this.player = Handler.getPlayer();
 		entities = new ArrayList<>();
-		entities.add(player);
 	}
 
 	public void tick() {
