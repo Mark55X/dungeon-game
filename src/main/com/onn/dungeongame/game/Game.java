@@ -73,8 +73,6 @@ public class Game implements Runnable {
 		double delta = 0; // Will be used to check if it is the right time to tick and render
 		final int FPS = 30; // Defines FPS
 		double time = 1000000000 / FPS; // Defines how many nanoseconds should there be before a tick and render
-		long timer = System.currentTimeMillis(); // This will be used to output the fps every second
-		int frames = 0; // Defines how many frames have there been in a second
 		int lastFPS = -1;
 
 		while(isRunning) {
@@ -85,19 +83,7 @@ public class Game implements Runnable {
 			if(delta >= 1) {
 				tick();
 				render();
-				frames++;
 				delta--;
-			}
-
-			if(System.currentTimeMillis() - timer >= 1000) {
-				if(lastFPS != frames) {
-					// Prints out the FPS only if it is a new one
-					// For instance, if the previous second the fps was 30 and in this second it is 30 too, it will not print
-					System.out.println(frames + " fps");
-					lastFPS = frames;
-				}
-				frames = 0;
-				timer = System.currentTimeMillis(); // Reset timer
 			}
 		}
 	}
