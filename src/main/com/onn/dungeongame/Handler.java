@@ -39,4 +39,12 @@ public class Handler {
 		return PlayState.player;
 	}
 
+	public static MouseInput getMouseInput() {
+		return game.getMouseInput();
+	}
+
+	public static Game getGame() {
+		return game;
+	}
+
 }

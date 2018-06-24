@@ -20,9 +20,11 @@ public class Game implements Runnable {
 
 	private Display display;
 	private KeyInput keyInput;
+	private MouseInput mouseInput;
 	private Camera camera;
 
-	private State playState;
+	public State playState;
+	public State menuState;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -44,12 +46,21 @@ public class Game implements Runnable {
 	private void init() {
 		Assets.init();
 		Handler.init(this);
-		display = new Display(title, width, height);
+
 		keyInput = new KeyInput();
+		mouseInput = new MouseInput();
 		camera = new Camera();
+
+		display = new Display(title, width, height);
 		display.getFrame().addKeyListener(keyInput);
+		display.getFrame().addMouseListener(mouseInput);
+		display.getFrame().addMouseMotionListener(mouseInput);
+		display.getCanvas().addMouseListener(mouseInput);
+		display.getCanvas().addMouseMotionListener(mouseInput);
+
 		playState = new PlayState();
-		State.setState(playState);
+		menuState = new MenuState();
+		State.setState(menuState);
 	}
 
 	@Override
@@ -132,5 +143,9 @@ public class Game implements Runnable {
 
 	public Camera getCamera() {
 		return camera;
+	}
+
+	public MouseInput getMouseInput() {
+		return mouseInput;
 	}
 }
