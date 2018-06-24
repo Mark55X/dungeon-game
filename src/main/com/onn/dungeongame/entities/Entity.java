@@ -12,9 +12,13 @@ public abstract class Entity {
 	protected int deffense;
 	protected int attack;
 
-	private static final int DEFAULT_HEALTH = 100;
-	private static final int DEFAULT_DEFFENSE = 3;
-	private static final int DEFAULT_ATTACK = 50;
+	protected int attackCooldown;
+	protected long lastAttackTimer;
+
+	protected static final int DEFAULT_HEALTH = 100;
+	protected static final int DEFAULT_DEFFENSE = 3;
+	protected static final int DEFAULT_ATTACK = 50;
+	protected static final int DEFAULT_ATTACK_COOLDOWN = 800;
 
 	protected int x;
 	protected int y;
@@ -31,6 +35,9 @@ public abstract class Entity {
 		health = DEFAULT_HEALTH;
 		deffense = DEFAULT_DEFFENSE;
 		attack = DEFAULT_ATTACK;
+
+		attackCooldown = DEFAULT_ATTACK_COOLDOWN;
+		lastAttackTimer = DEFAULT_ATTACK_COOLDOWN;
 	}
 
 	protected void setWidth(int a) {

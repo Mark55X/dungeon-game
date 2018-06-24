@@ -121,6 +121,11 @@ public class Player extends Creature {
 	}
 
 	private void checkAttacks() {
+		if(System.currentTimeMillis() - lastAttackTimer < attackCooldown) {
+			return;
+		}
+		lastAttackTimer = System.currentTimeMillis();
+
 		Rectangle cb = getBounds(0f, 0f);
 		Rectangle ar = new Rectangle();
 		int arSize = 20;
