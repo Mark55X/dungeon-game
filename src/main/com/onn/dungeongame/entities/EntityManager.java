@@ -24,11 +24,15 @@ public class EntityManager {
 
 	public EntityManager() {
 		entities = new ArrayList<>();
+		entities.add(new Log1(32, 300));
 	}
 
 	public void tick() {
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).tick();
+			if(!entities.get(i).isActive()) {
+				entities.remove(entities.get(i));
+			}
 		}
 		entities.sort(renderSorter);
 	}

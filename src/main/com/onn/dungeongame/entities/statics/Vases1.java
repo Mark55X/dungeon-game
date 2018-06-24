@@ -13,6 +13,11 @@ public class Vases1 extends StaticEntity {
 	}
 
 	@Override
+	public void die() {
+		active = false;
+	}
+
+	@Override
 	public void tick() {
 
 	}

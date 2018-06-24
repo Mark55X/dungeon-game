@@ -10,6 +10,7 @@ public class KeyInput implements KeyListener {
 	public boolean down;
 	public boolean left;
 	public boolean right;
+	public boolean attack;
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -31,6 +32,7 @@ public class KeyInput implements KeyListener {
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
 		right = keys[KeyEvent.VK_D];
+		attack = keys[KeyEvent.VK_ENTER];
 	}
 
 }

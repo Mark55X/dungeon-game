@@ -6,6 +6,7 @@ import com.onn.dungeongame.gfx.*;
 import com.onn.dungeongame.animation.*;
 import com.onn.dungeongame.input.*;
 import com.onn.dungeongame.tiles.*;
+import com.onn.dungeongame.entities.*;
 import com.onn.dungeongame.*;
 
 public class Player extends Creature {
@@ -24,6 +25,7 @@ public class Player extends Creature {
 	 * 2 -> left
 	 * 3 -> right
 	 */
+ 	private boolean attacking;
 
 	private BufferedImage texture;
 
@@ -44,6 +46,11 @@ public class Player extends Creature {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(texture, (int) (x - Handler.getCamera().getX()), (int) (y - Handler.getCamera().getY()), size.width, size.height, null);
+	}
+
+	@Override
+	public void die() {
+		active = false;
 	}
 
 	@Override
@@ -98,6 +105,8 @@ public class Player extends Creature {
 			xMove = speed;
 		}
 
+		attacking = input.attack;
+
 		if(!collides(xMove, 0f)) {
 			moveX();
 		}
@@ -107,6 +116,55 @@ public class Player extends Creature {
 		}
 
 		Handler.getCamera().center(this);
+
+		checkAttacks();
+	}
+
+	private void checkAttacks() {
+		Rectangle cb = getBounds(0f, 0f);
+		Rectangle ar = new Rectangle();
+		int arSize = 20;
+		ar.width = arSize;
+		ar.height = arSize;
+
+		if(Handler.getKeyInput().attack) {
+			switch(lastMove) {
+			case 0:
+				// Up
+				ar.x = cb.x + cb.width / 2 - arSize / 2;
+				ar.y = cb.y - arSize;
+				break;
+			case 1:
+				// Down
+				ar.x = cb.x + cb.width / 2 - arSize / 2;
+				ar.y = cb.y + cb.height;
+				break;
+			case 2:
+				// Left
+				ar.x = cb.x - arSize;
+				ar.y = cb.y + cb.height / 2 - arSize / 2;
+				break;
+			case 3:
+				// Right
+				ar.x = cb.x + cb.width;
+				ar.y = cb.y - arSize;
+				break;
+			default:
+				System.out.println("[E] Invalid use of lastMove in class Player");
+				System.exit(1);
+			}
+
+			for(Entity e : Handler.getWorld().getEntityManager().getEntities()) {
+				if(e.equals(this)) {
+					continue;
+				}
+
+				if(e.getBounds(0, 0).intersects(ar)) {
+					e.hurt(attack);
+					return;
+				}
+			}
+		}
 	}
 
 	private void moveX() {

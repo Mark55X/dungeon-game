@@ -3,14 +3,24 @@ package com.onn.dungeongame.entities;
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.geom.*;
+import java.util.*;
 import com.onn.dungeongame.*;
 
 public abstract class Entity {
+
+	protected int health;
+	protected int deffense;
+	protected int attack;
+
+	private static final int DEFAULT_HEALTH = 100;
+	private static final int DEFAULT_DEFFENSE = 3;
+	private static final int DEFAULT_ATTACK = 50;
 
 	protected int x;
 	protected int y;
 	protected BufferedImage texture;
 	protected Dimension size;
+	protected boolean active = true;
 	protected Rectangle bounds; // Collision bounds
 
 	public Entity(int x, int y) {
@@ -18,6 +28,9 @@ public abstract class Entity {
 		this.y = y;
 		size = new Dimension(0, 0);
 		bounds = new Rectangle(0, 0, size.width, size.height);
+		health = DEFAULT_HEALTH;
+		deffense = DEFAULT_DEFFENSE;
+		attack = DEFAULT_ATTACK;
 	}
 
 	protected void setWidth(int a) {
@@ -81,6 +94,45 @@ public abstract class Entity {
 
 	public Rectangle getBounds(float x, float y) {
 		return new Rectangle((int) (this.x + bounds.x + x), (int) (this.y + bounds.y + y), bounds.width, bounds.height);
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public int getDeffense() {
+		return deffense;
+	}
+
+	public void setHealth(int a) {
+		health = a;
+	}
+
+	public void setAttack(int a) {
+		attack = a;
+	}
+
+	public void setDeffense(int a) {
+		attack = a;
+	}
+
+	public abstract void die();
+
+	public void hurt(int a) {
+		health -= new Random().nextInt(a);
+
+		if(health <= 0) {
+			active = false;
+			die();
+		}
+	}
+
+	public boolean isActive() {
+		return active;
 	}
 
 }
