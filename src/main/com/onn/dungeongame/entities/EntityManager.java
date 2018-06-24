@@ -10,6 +10,16 @@ import com.onn.dungeongame.entities.statics.*;
 public class EntityManager {
 	private Player player;
 	private ArrayList<Entity> entities;
+	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
+		@Override
+		public int compare(Entity a, Entity b) {
+			if(a.getY() < b.getY()) {
+				return -1;
+			}
+
+			return 1;
+		}
+	};
 
 	protected Rectangle bounds;
 
@@ -17,13 +27,13 @@ public class EntityManager {
 		this.player = Handler.getPlayer();
 		entities = new ArrayList<>();
 		entities.add(player);
-		entities.add(new WineBottle1(64, 250));
 	}
 
 	public void tick() {
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).tick();
 		}
+		entities.sort(renderSorter);
 	}
 
 	public void render(Graphics g) {

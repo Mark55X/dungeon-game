@@ -10,7 +10,6 @@ public class Assets {
     private static BufferedImage sheet;
 	private static BufferedImage player_sheet;
 	private static BufferedImage sheet2;
-	private static BufferedImage miscSheet;
 
     public static BufferedImage rock_1;
     public static BufferedImage grass_1;
@@ -25,10 +24,8 @@ public class Assets {
 	public static BufferedImage cobblestone_mossy_1;
 	public static BufferedImage cobblestone_floor_1;
 	public static BufferedImage blank;
-	public static BufferedImage wine_bottle_1;
-	public static BufferedImage wine_bottle_2;
-	public static BufferedImage wine_bottle_3;
-	public static BufferedImage wine_bottle_4;
+	public static BufferedImage log_1;
+	public static BufferedImage vases_1;
 
 	public static BufferedImage world_background;
 
@@ -49,7 +46,6 @@ public class Assets {
         sheet = load("/drawable/sheet.png");
         player_sheet = load("/drawable/player_sheet.png");
         world_background = load("/drawable/world_background.png");
-		miscSheet = load("/drawable/misc.png");
 		sheet2 = load("/drawable/sheet2.png");
 
 		wall_left_1 = crop2(2, 5);
@@ -65,10 +61,8 @@ public class Assets {
 		cobblestone_mossy_1 = crop(22, 4);
 		cobblestone_floor_1 = crop(22, 14);
 		blank = crop2(28, 9);
-		wine_bottle_1 = cropMisc(0, 1);
-		wine_bottle_2 = cropMisc(1, 2);
-		wine_bottle_3 = cropMisc(2, 3);
-		wine_bottle_4 = cropMisc(5, 3);
+		log_1 = crop2(1, 8);
+		vases_1 = crop2(3, 9);
 
 		player_blue_up = new BufferedImage[3];
 		player_blue_up[0] = cropPlayer(0, 3);
@@ -112,10 +106,6 @@ public class Assets {
 
 	private static BufferedImage crop2(int x, int y) {
 		return sheet2.getSubimage(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
-	}
-
-	private static BufferedImage cropMisc(int x, int y) {
-		return miscSheet.getSubimage(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
 	}
 
 }

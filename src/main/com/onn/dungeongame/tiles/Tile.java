@@ -19,10 +19,6 @@ public class Tile {
 	public static Tile cobbleStoneMossy1Tile = new CobbleStoneMossy1Tile(10);
 	public static Tile cobbleStoneFloor1Tile = new CobbleStoneFloor1Tile(11);
 	public static Tile blankTile = new BlankTile(12);
-	public static Tile wineBottle1Tile = new WineBottle1Tile(13);
-	public static Tile wineBottle2Tile = new WineBottle2Tile(14);
-	public static Tile wineBottle3Tile = new WineBottle3Tile(15);
-	public static Tile wineBottle4Tile = new WineBottle4Tile(16);
 
     public static final int TILEWIDTH = 32;
     public static final int TILEHEIGHT = 32;

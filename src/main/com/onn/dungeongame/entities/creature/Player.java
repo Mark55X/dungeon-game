@@ -33,6 +33,7 @@ public class Player extends Creature {
 		bounds.y = 15;
 		bounds.width = 8;
 		bounds.height = 18;
+		setSpeed(6);
 
 		up_walk_animation = new Animation(Assets.player_blue_up, 50, true);
 		down_walk_animation = new Animation(Assets.player_blue_down, 50, true);

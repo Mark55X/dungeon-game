@@ -11,12 +11,40 @@ public abstract class Entity {
 	protected int y;
 	protected BufferedImage texture;
 	protected Dimension size;
-	protected Rectangle bounds;
+	protected Rectangle bounds; // Collision bounds
 
 	public Entity(int x, int y) {
 		this.x = x;
 		this.y = y;
 		size = new Dimension(0, 0);
+		bounds = new Rectangle(0, 0, size.width, size.height);
+	}
+
+	protected void setWidth(int a) {
+		size.width = a;
+	}
+
+	protected void setHeight(int a) {
+		size.height = a;
+	}
+
+	protected void noBounds() {
+		bounds.x = 0;
+		bounds.y = 0;
+		bounds.height = 0;
+		bounds.width = 0;
+	}
+
+	protected void setBounds(int x, int y, int width, int height) {
+		bounds.x = x;
+		bounds.y = y;
+		bounds.width = width;
+		bounds.height = height;
+	}
+
+	protected void setDimension(int width, int height) {
+		size.width = width;
+		size.height = height;
 	}
 
 	public int getX() {

@@ -43,6 +43,10 @@ public abstract class Creature extends Entity {
 		bounds.height = size.height;
 	}
 
+	protected void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
 	public abstract void tick();
 	public abstract void render(Graphics g);
 

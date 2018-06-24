@@ -95,7 +95,6 @@ public class Game implements Runnable {
 		// Tick all objects here
 		keyInput.tick();
 		world.tick();
-		player.tick();
 	}
 
 	private void render() {
@@ -109,7 +108,6 @@ public class Game implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 
 		world.render(g);
-		player.render(g);
 
 		bs.show();
 		g.dispose();
