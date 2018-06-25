@@ -1,4 +1,3 @@
-This is an open-source java game, you're free to do whatever you want with it :3
 The assets are not mine, here is where I got them:
 
 - Player sheet: https://animatefox.deviantart.com/art/Prussia-Sprite-Sheet-181329381
@@ -8,3 +7,7 @@ The assets are not mine, here is where I got them:
 - More tiles (sheet2.png): https://www.newgrounds.com/art/view/hyptosis/tile-art-batch-1 by Hyptosis
 - Misc 2 (misc2.png): https://opengameart.org/content/isaiah658s-pixel-pack-1 by isaiah658
 - Font sheet (font.png): https://wafiharowa.files.wordpress.com/2013/11/font1.png
+- Sprite sheet 3 (sheet3.png): https://www.pinterest.com/pin/54958057931808938/
+# - Sprite sheet 4 (sheet4.png): https://www.pinterest.com/pin/319403798563614918/
+# - Sprite sheet 5 (sheet5.png): https://www.pinterest.com/pin/319403798563614744/
+# - Sprite sheet 6 (sheet6.png): https://www.pinterest.com/pin/269090146459287610/
