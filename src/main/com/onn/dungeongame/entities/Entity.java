@@ -17,8 +17,8 @@ public abstract class Entity {
 
 	protected static final int DEFAULT_HEALTH = 100;
 	protected static final int DEFAULT_DEFFENSE = 3;
-	protected static final int DEFAULT_ATTACK = 50;
-	protected static final int DEFAULT_ATTACK_COOLDOWN = 800;
+	protected static final int DEFAULT_ATTACK = 20;
+	protected static final int DEFAULT_ATTACK_COOLDOWN = 300;
 
 	protected int x;
 	protected int y;

@@ -25,6 +25,11 @@ public class EntityManager {
 	public EntityManager() {
 		entities = new ArrayList<>();
 		entities.add(new Log1(32, 300));
+		entities.add(new Log1(64, 294));
+		entities.add(new Log1(100, 303));
+		entities.add(new Log1(200, 303));
+		entities.add(new Log1(300, 303));
+		entities.add(new Log1(600, 303));
 	}
 
 	public void tick() {
@@ -43,6 +48,7 @@ public class EntityManager {
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(g);
 		}
+		Handler.getPlayer().postRender(g);
 	}
 
 	public void addEntity(Entity e) {
