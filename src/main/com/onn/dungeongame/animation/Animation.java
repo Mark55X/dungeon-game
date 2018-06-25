@@ -22,6 +22,10 @@ public class Animation {
 		this.reverse = reverse;
 	}
 
+	public void reset() {
+		currentIndex = 0;
+	}
+
 	public void tick() {
 		if(System.currentTimeMillis() - timer >= speed) {
 			timer = System.currentTimeMillis();
