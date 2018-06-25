@@ -3,6 +3,7 @@ package com.onn.dungeongame.gfx;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
+import java.awt.*;
 import com.onn.dungeongame.util.*;
 
 public class Assets {
@@ -28,12 +29,16 @@ public class Assets {
 	public static BufferedImage vases_1;
 	public static BufferedImage drop_log_1;
 
+	public static Font font28;
+	public static Font font14;
+
 	public static BufferedImage world_background;
 
 	public static BufferedImage[] player_blue_up;
 	public static BufferedImage[] player_blue_down;
 	public static BufferedImage[] player_blue_right;
 	public static BufferedImage[] player_blue_left;
+	public static BufferedImage[] attacking;
 
     private static final int TILEWIDTH = 32;
     private static final int TILEHEIGHT = 32;
@@ -85,6 +90,19 @@ public class Assets {
 		player_blue_right[0] = cropPlayer(0, 2);
 		player_blue_right[1] = cropPlayer(1, 2);
 		player_blue_right[2] = cropPlayer(2, 2);
+
+		attacking = new BufferedImage[8];
+		attacking[0] = crop(47, 25);
+		attacking[1] = crop(48, 25);
+		attacking[2] = crop(49, 25);
+		attacking[3] = crop(50, 25);
+		attacking[4] = crop(51, 25);
+		attacking[5] = crop(52, 25);
+		attacking[6] = crop(53, 25);
+		attacking[7] = crop(54, 25);
+
+		font28 = FontLoader.loadFont(Assets.class.getResource("/font/slkscr.ttf"), 28);
+		font14 = FontLoader.loadFont(Assets.class.getResource("/font/slkscr.ttf"), 14);
     }
 
     private static BufferedImage load(String path) {
