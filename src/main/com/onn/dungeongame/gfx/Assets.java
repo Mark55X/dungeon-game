@@ -26,6 +26,7 @@ public class Assets {
 	public static BufferedImage blank;
 	public static BufferedImage log_1;
 	public static BufferedImage vases_1;
+	public static BufferedImage drop_log_1;
 
 	public static BufferedImage world_background;
 
@@ -63,6 +64,7 @@ public class Assets {
 		blank = crop2(28, 9);
 		log_1 = crop2(1, 8);
 		vases_1 = crop2(3, 9);
+		drop_log_1 = crop(39, 43);
 
 		player_blue_up = new BufferedImage[3];
 		player_blue_up[0] = cropPlayer(0, 3);

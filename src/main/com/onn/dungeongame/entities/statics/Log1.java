@@ -3,6 +3,7 @@ package com.onn.dungeongame.entities.statics;
 import java.awt.*;
 import com.onn.dungeongame.*;
 import com.onn.dungeongame.gfx.*;
+import com.onn.dungeongame.item.*;
 
 public class Log1 extends StaticEntity {
 
@@ -14,7 +15,7 @@ public class Log1 extends StaticEntity {
 
 	@Override
 	public void die() {
-		active = false;
+		Handler.getWorld().getItemManager().addItem(Item.wood1Item.createNew(x, y));
 	}
 
 	@Override

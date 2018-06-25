@@ -28,10 +28,12 @@ public class EntityManager {
 	}
 
 	public void tick() {
-		for(int i = 0; i < entities.size(); i++) {
-			entities.get(i).tick();
-			if(!entities.get(i).isActive()) {
-				entities.remove(entities.get(i));
+		Iterator<Entity> it = entities.iterator();
+		while(it.hasNext()) {
+			Entity e = it.next();
+			e.tick();
+			if(!e.isActive()) {
+				it.remove();
 			}
 		}
 		entities.sort(renderSorter);

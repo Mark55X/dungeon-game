@@ -10,6 +10,7 @@ import com.onn.dungeongame.camera.*;
 import java.util.*;
 import com.onn.dungeongame.entities.*;
 import com.onn.dungeongame.entities.statics.*;
+import com.onn.dungeongame.item.*;
 
 public class World {
     private int width;
@@ -18,9 +19,11 @@ public class World {
     private int playerY;
     private Tile[][] tiles;
 	private EntityManager entityManager;
+	private ItemManager itemManager;
 
 	private void init() {
 		entityManager = new EntityManager();
+		itemManager = new ItemManager();
 	}
 
     public void loadWorld(URL path) {
@@ -37,8 +40,8 @@ public class World {
              * where:
              *      w is the world width
              *      h is the world height
-             *      px is the player x spawn position
              *      py is the player y spawn position
+			 *      px is the player x spawn position
              *      tiles... from now on there must be w * h tiles
              *
              * Every tile is defined by an ID number (see com.onn.dungeongame.tiles.Tile)
@@ -102,6 +105,7 @@ public class World {
         }
 
 		entityManager.tick();
+		itemManager.tick();
     }
 
     public void render(Graphics g) {
@@ -118,6 +122,8 @@ public class World {
                 g.drawImage(tiles[x][y].getTexture(), (int) (x * Tile.TILEWIDTH - Handler.getCamera().getX()), (int) (y * Tile.TILEHEIGHT - Handler.getCamera().getY()), Tile.TILEWIDTH, Tile.TILEHEIGHT, null);
             }
         }
+
+		itemManager.render(g);
 
 		entityManager.render(g);
     }
@@ -136,5 +142,9 @@ public class World {
 
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	public ItemManager getItemManager() {
+		return itemManager;
 	}
 }
