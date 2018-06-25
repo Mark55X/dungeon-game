@@ -8,6 +8,7 @@ import com.onn.dungeongame.input.*;
 import com.onn.dungeongame.tiles.*;
 import com.onn.dungeongame.entities.*;
 import com.onn.dungeongame.*;
+import com.onn.dungeongame.inventory.*;
 
 public class Player extends Creature {
 
@@ -15,6 +16,11 @@ public class Player extends Creature {
 	private Animation down_walk_animation;
 	private Animation left_walk_animation;
 	private Animation right_walk_animation;
+	private Animation attack_animation;
+
+	private int attackY = Handler.getHeight() - 32 - 10; // 10 is just an offset
+	private int attackX = 10; // 10 is just an offset
+
 	private int lastMove = 3;
 	/*
 	 * lastMove will be used to determine which texture to render
@@ -28,6 +34,7 @@ public class Player extends Creature {
  	private boolean attacking;
 
 	private BufferedImage texture;
+	private Inventory inventory;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -41,11 +48,17 @@ public class Player extends Creature {
 		down_walk_animation = new Animation(Assets.player_blue_down, 50, true);
 		left_walk_animation = new Animation(Assets.player_blue_left, 50, true);
 		right_walk_animation = new Animation(Assets.player_blue_right, 50, true);
+		attack_animation = new Animation(Assets.attacking, 50, false);
+
+		inventory = new Inventory();
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(texture, (int) (x - Handler.getCamera().getX()), (int) (y - Handler.getCamera().getY()), size.width, size.height, null);
+		if(attacking) {
+			g.drawImage(attack_animation.getImage(), attackX, attackY, 32, 32, null);
+		}
 	}
 
 	@Override
@@ -118,6 +131,7 @@ public class Player extends Creature {
 		Handler.getCamera().center(this);
 
 		checkAttacks();
+		inventory.tick();
 	}
 
 	private void checkAttacks() {
@@ -133,6 +147,8 @@ public class Player extends Creature {
 		ar.height = arSize;
 
 		if(Handler.getKeyInput().attack) {
+			attack_animation.tick();
+
 			switch(lastMove) {
 			case 0:
 				// Up
@@ -152,7 +168,7 @@ public class Player extends Creature {
 			case 3:
 				// Right
 				ar.x = cb.x + cb.width;
-				ar.y = cb.y - arSize;
+				ar.y = cb.y + cb.height / 2 - arSize / 2;;
 				break;
 			default:
 				System.out.println("[E] Invalid use of lastMove in class Player");
@@ -242,6 +258,14 @@ public class Player extends Creature {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void postRender(Graphics g) {
+		inventory.render(g);
 	}
 
 }
