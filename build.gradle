@@ -3,17 +3,17 @@ apply plugin: "java";
 sourceSets {
 	main {
 		java {
-			srcDir "src/main"
+			srcDir "src"
 		}
 
 		resources {
-			srcDir "src/main/resources"
+			srcDir "res"
 		}
 	}
 	
 	test {
 		java {
-			srcDir "src/test"
+			srcDir "test"
 		}
 	}
 }
