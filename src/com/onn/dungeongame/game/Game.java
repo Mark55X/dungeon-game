@@ -1,15 +1,16 @@
 package com.onn.dungeongame.game;
 
-import java.awt.*;
-import java.awt.image.*;
+import com.onn.dungeongame.Handler;
+import com.onn.dungeongame.camera.Camera;
+import com.onn.dungeongame.gfx.Assets;
+import com.onn.dungeongame.input.KeyInput;
+import com.onn.dungeongame.input.MouseInput;
+import com.onn.dungeongame.states.MenuState;
+import com.onn.dungeongame.states.PlayState;
+import com.onn.dungeongame.states.State;
 
-import com.onn.dungeongame.*;
-import com.onn.dungeongame.gfx.*;
-import com.onn.dungeongame.world.*;
-import com.onn.dungeongame.entities.creature.*;
-import com.onn.dungeongame.input.*;
-import com.onn.dungeongame.camera.*;
-import com.onn.dungeongame.states.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class Game implements Runnable {
 	private String title;
@@ -106,6 +107,7 @@ public class Game implements Runnable {
 		}
 
 		Graphics g = bs.getDrawGraphics();
+		Handler.setGraphics(g);
 
 		if(State.getState() != null) {
 			State.getState().render(g);
@@ -134,4 +136,5 @@ public class Game implements Runnable {
 	public MouseInput getMouseInput() {
 		return mouseInput;
 	}
+
 }

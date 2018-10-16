@@ -1,16 +1,16 @@
 package com.onn.dungeongame.world;
 
-import java.io.*;
+import com.onn.dungeongame.Handler;
+import com.onn.dungeongame.entities.EntityManager;
+import com.onn.dungeongame.gfx.Assets;
+import com.onn.dungeongame.item.ItemManager;
+import com.onn.dungeongame.tiles.Tile;
+
 import java.awt.*;
-import java.net.*;
-import com.onn.dungeongame.tiles.*;
-import com.onn.dungeongame.*;
-import com.onn.dungeongame.gfx.*;
-import com.onn.dungeongame.camera.*;
-import java.util.*;
-import com.onn.dungeongame.entities.*;
-import com.onn.dungeongame.entities.statics.*;
-import com.onn.dungeongame.item.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public class World {
     private int width;
@@ -22,6 +22,7 @@ public class World {
 	private ItemManager itemManager;
 
 	private void init() {
+		Handler.setWorld(this);
 		itemManager = new ItemManager();
 	}
 

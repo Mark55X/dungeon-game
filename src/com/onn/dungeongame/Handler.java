@@ -1,15 +1,20 @@
 package com.onn.dungeongame;
 
-import com.onn.dungeongame.game.*;
-import com.onn.dungeongame.input.*;
-import com.onn.dungeongame.camera.*;
-import com.onn.dungeongame.world.*;
-import com.onn.dungeongame.entities.creature.*;
-import com.onn.dungeongame.states.*;
+import com.onn.dungeongame.camera.Camera;
+import com.onn.dungeongame.entities.creature.Player;
+import com.onn.dungeongame.game.Game;
+import com.onn.dungeongame.input.KeyInput;
+import com.onn.dungeongame.input.MouseInput;
+import com.onn.dungeongame.world.World;
+
+import java.awt.*;
 
 public class Handler {
 
     private static Game game;
+    private static World world;
+    private static Player player;
+    private static Graphics graphics;
 
     public static void init(Game arg0) {
         game = arg0;
@@ -32,11 +37,11 @@ public class Handler {
 	}
 
 	public static World getWorld() {
-		return PlayState.world;
+		return world;
 	}
 
 	public static Player getPlayer() {
-		return PlayState.player;
+		return player;
 	}
 
 	public static MouseInput getMouseInput() {
@@ -45,6 +50,22 @@ public class Handler {
 
 	public static Game getGame() {
 		return game;
+	}
+
+	public static void setWorld(World world) {
+		Handler.world = world;
+	}
+
+	public static void setPlayer(Player player) {
+		Handler.player = player;
+	}
+
+	public static Graphics getGraphics() {
+		return graphics;
+	}
+
+	public static void setGraphics(Graphics graphics) {
+		Handler.graphics = graphics;
 	}
 
 }
