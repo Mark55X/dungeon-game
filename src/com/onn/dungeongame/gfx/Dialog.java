@@ -17,7 +17,7 @@ public class Dialog {
 	private Color foregroundColor;
 	private Color fontColor;
 
-	public static final int DEFAULT_LINE_MARGIN_RIGHT = 32;
+	public static final int DEFAULT_LINE_MARGIN_RIGHT = 128;
 	public static final int DEFAULT_LINE_MARGIN_LEFT = 16;
 	public static final int DEFAULT_LINE_MARGIN_TOP = 24;
 
@@ -43,35 +43,32 @@ public class Dialog {
 			return;
 
 		LinkedList<String> lines = new LinkedList<>();
+		String[] splitLines = string.split(" ");
 		String tmp = "";
+
 		int availableSpace = (int) bounds.getWidth();
 		int currentSpace = 0;
-		for(int i = 0; i < string.length(); i++) {
-			if(string.charAt(i) == '\n' || string.charAt(i) == '\t') {
-				if(i == string.length() - 1) {
-					lines.add(tmp);
-				}
 
-				continue;
-			}
-
-			int charWidth = Toolkit.getDefaultToolkit().getFontMetrics(font).charWidth(string.charAt(i));
-			if(currentSpace + charWidth + lineMarginRight > availableSpace) { // The lineMarginRight is just to make sure that no character goes out of bounds since the space is not counted in the currentSpace
+		for(int i = 0; i < splitLines.length; i++) {
+			int stringWidth = (int) Toolkit.getDefaultToolkit().getFontMetrics(font).getStringBounds(splitLines[i], g).getWidth();
+			if(currentSpace + stringWidth + lineMarginRight > availableSpace) {
 				lines.add(tmp);
-				tmp = "";
-				tmp += string.charAt(i);
-				currentSpace = charWidth;
 
-				if(i == string.length() - 1) {
-					tmp = "";
-					tmp += string.charAt(i);
+				tmp = splitLines[i];
+
+				if(i < splitLines.length - 1) {
+					tmp += " ";
+				} else {
 					lines.add(tmp);
 				}
-			} else {
-				currentSpace += charWidth;
-				tmp += string.charAt(i);
 
-				if(i == string.length() - 1) {
+				currentSpace = stringWidth + Toolkit.getDefaultToolkit().getFontMetrics(font).charWidth(' ');
+			} else {
+				tmp += splitLines[i];
+				currentSpace += stringWidth;
+				if(i < splitLines.length - 1) {
+					tmp += " ";
+				} else {
 					lines.add(tmp);
 				}
 			}

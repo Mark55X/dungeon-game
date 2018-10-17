@@ -26,71 +26,51 @@ public class DialogManager {
 		this.fontHeight = fontHeight;
 		this.bounds = bounds;
 		this.marginTop = marginTop;
-		/*FontRenderContext frc = ((Graphics2D) Handler.getGraphics()).getFontRenderContext();
-		GlyphVector gv = Handler.getGraphics().getFont().createGlyphVector(frc, text);
-		int fontHeight = (int) gv.getPixelBounds(null, 0, 0).getHeight();*/
 
 		int availableRows = (int) (bounds.getHeight() / (fontHeight + marginTop));
-		System.out.println("Available rows: " + availableRows);
-		System.out.println("Bounds height: " + bounds.getHeight());
-		System.out.println("Margin top: " + marginTop);
 
 		String tmp = "";
+		String[] splitLines = text.split(" ");
 		int availableSpace = (int) bounds.getWidth();
 		int currentSpace = 0;
 		int rows = 0;
-		for(int i = 0; i < text.length(); i++) {
-			if(text.charAt(i) == '\n' || text.charAt(i) == '\t') {
-				if(i == text.length() - 1) {
-					rows++;
-				}
 
-				if(rows == availableRows) {
-					Dialog dialog = new Dialog(font, bounds);
-					dialog.setString(tmp);
-					dialog.setLineMarginTop(marginTop);
-					dialogs.add(dialog);
-					tmp = "";
-					rows = 0;
-				}
+		for(int i = 0; i < splitLines.length; i++) {
+			int stringWidth = 0;
+			for(int b = 0; b < splitLines[i].length(); b++) {
+				stringWidth += Toolkit.getDefaultToolkit().getFontMetrics(font).charWidth(splitLines[i].charAt(b));
 			}
 
-			int charWidth = Toolkit.getDefaultToolkit().getFontMetrics(font).charWidth(text.charAt(i));
-			if(currentSpace + charWidth + Dialog.DEFAULT_LINE_MARGIN_RIGHT > availableSpace) { // The DEFAULT_LINE_MARGIN_RIGHT is just to make sure that no character goes out of bounds since the space is not counted in the currentSpace
+			if(stringWidth + Dialog.DEFAULT_LINE_MARGIN_RIGHT + currentSpace > availableSpace) {
 				rows++;
-
 				if(rows == availableRows) {
 					Dialog dialog = new Dialog(font, bounds);
-					dialog.setString(tmp);
+					dialog.setString(text);
 					dialog.setLineMarginTop(marginTop);
 					dialogs.add(dialog);
-					tmp = "";
 					rows = 0;
+					tmp = "";
+					currentSpace = 0;
 				}
 
-				tmp += text.charAt(i);
-				currentSpace = charWidth;
-
-				if(i == text.length() - 1) {
-					tmp += text.charAt(i);
-					rows++;
-				}
+				tmp += splitLines[i];
+				currentSpace += stringWidth;
 			} else {
-				currentSpace += charWidth;
-				tmp += text.charAt(i);
-
-				if(i == text.length() - 1) {
-					rows++;
+				tmp += splitLines[i];
+				if(i < splitLines.length - 1) {
+					tmp += " ";
 				}
+				currentSpace += stringWidth;
 			}
 
-			if(rows == availableRows || i == text.length() - 1) {
+			if(rows == availableRows) {
+				rows = 0;
 				Dialog dialog = new Dialog(font, bounds);
-				dialog.setString(tmp);
+				dialog.setString(text);
 				dialog.setLineMarginTop(marginTop);
 				dialogs.add(dialog);
 				tmp = "";
-				rows = 0;
+				currentSpace = 0;
 			}
 		}
 
