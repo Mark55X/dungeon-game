@@ -1,10 +1,10 @@
 package com.onn.dungeongame.gfx;
 
-import javax.imageio.*;
-import java.awt.image.*;
-import java.io.*;
+import com.onn.dungeongame.util.Utils;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
-import com.onn.dungeongame.util.*;
+import java.awt.image.BufferedImage;
 
 public class Assets {
 
