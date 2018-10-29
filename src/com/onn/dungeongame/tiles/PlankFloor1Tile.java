@@ -2,11 +2,11 @@ package com.onn.dungeongame.tiles;
 
 import com.onn.dungeongame.gfx.*;
 
-public class TiledFloor1Tile extends Tile {
+public class PlankFloor1Tile extends Tile {
 
-	public TiledFloor1Tile(int id) {
+	public PlankFloor1Tile(int id) {
 		super(id);
-		texture = Assets.tiled_floor_1;
+		texture = Assets.plank_floor_1;
 	}
 
 }
