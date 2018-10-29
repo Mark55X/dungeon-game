@@ -1,3 +1,14 @@
 .gradle
 build
 .vscode
+out
+colors
+codestyles
+.idea
+_linux
+*.schemes
+*.xml
+*.iml
+*.bat
+gradlew
+gradle
