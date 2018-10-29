@@ -1,7 +1,6 @@
 package com.onn.dungeongame.tiles;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 
 public class Tile {
 
@@ -19,14 +18,18 @@ public class Tile {
 	public static Tile cobbleStoneMossy1Tile = new CobbleStoneMossy1Tile(10);
 	public static Tile cobbleStoneFloor1Tile = new CobbleStoneFloor1Tile(11);
 	public static Tile blankTile = new BlankTile(12);
+	public static Tile tiledFloor1Tile = new PlankFloor1Tile(13);
 
     public static final int TILEWIDTH = 32;
     public static final int TILEHEIGHT = 32;
+
+    private int id;
 
     protected BufferedImage texture;
 
     public Tile(int id) {
         tiles[id] = this;
+        this.id = id;
     }
 
     public BufferedImage getTexture() {
@@ -40,5 +43,9 @@ public class Tile {
 	public boolean isSolid() {
 		return false;
 	}
+
+    public int getID() {
+        return id;
+    }
 
 }
