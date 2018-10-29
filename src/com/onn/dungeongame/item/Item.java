@@ -120,4 +120,13 @@ public class Item {
 	public void setCount(int a) {
 		count = a;
 	}
+
+    public void setBounds(Rectangle bounds) {
+        this.bounds = bounds;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
 }
