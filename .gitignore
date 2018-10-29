@@ -12,3 +12,7 @@ _linux
 *.bat
 gradlew
 gradle
+res/audio
+res/jar
+.idea
+*.class
