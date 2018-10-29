@@ -2,7 +2,6 @@ package com.onn.dungeongame.world;
 
 import com.onn.dungeongame.Handler;
 import com.onn.dungeongame.entities.EntityManager;
-import com.onn.dungeongame.gfx.Assets;
 import com.onn.dungeongame.item.ItemManager;
 import com.onn.dungeongame.tiles.Tile;
 
@@ -10,6 +9,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 
 public class World {
@@ -20,34 +20,26 @@ public class World {
     private Tile[][] tiles;
 	private EntityManager entityManager;
 	private ItemManager itemManager;
+    private String path;
+
+    public World() {
+        init();
+    }
 
 	private void init() {
 		Handler.setWorld(this);
 		itemManager = new ItemManager();
 	}
 
-    public void loadWorld(URL path) {
-		init();
+    public void loadItemWorld(String path) {
+        itemManager.loadFromFile(path);
+    }
+
+    public void loadWorld(String path) {
+        this.path = path;
 
         try {
-            // Load the world
-
-            /*
-             * The world format must be as following
-             *
-             * w h px py tiles...
-             *
-             * where:
-             *      w is the world width
-             *      h is the world height
-             *      py is the player y spawn position
-			 *      px is the player x spawn position
-             *      tiles... from now on there must be w * h tiles
-             *
-             * Every tile is defined by an ID number (see com.onn.dungeongame.tiles.Tile)
-             */
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(path.openStream()));
+            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
             String content, line;
             StringBuilder sb = new StringBuilder();
 
@@ -70,8 +62,7 @@ public class World {
             int x = 0;
             int y = 0;
 
-			int i = 0;
-            // From now on get the tiles
+			int i;
             for(i = 4; i < tokens.length; i++) {
                 tiles[x][y] = Tile.tiles[Integer.parseInt(tokens[i])];
                 x++;
@@ -110,8 +101,8 @@ public class World {
     }
 
     public void render(Graphics g) {
-        // Render stuff here
-        g.drawImage(Assets.world_background, 0, 0, Handler.getWidth(), Handler.getHeight(), null);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, Handler.getWidth(), Handler.getHeight());
 
 		int xs = Math.max(0, (int) (Handler.getCamera().getX() / Tile.TILEWIDTH));
 		int xe = Math.min(width, (int) (Handler.getCamera().getX() + Handler.getWidth()) / Tile.TILEWIDTH + 1); // x end (rendering)
@@ -148,4 +139,25 @@ public class World {
 	public ItemManager getItemManager() {
 		return itemManager;
 	}
+
+    public void save() {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)));
+
+            bw.write(String.valueOf(width) + " " + String.valueOf(height));
+            bw.write("\n");
+            bw.write(String.valueOf(Handler.getPlayer().getX()) + " " + String.valueOf(Handler.getPlayer().getY()));
+            bw.write("\n");
+
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                    bw.write(String.valueOf(tiles[x][y].getID()));
+                }
+            }
+
+            bw.close();
+        } catch(IOException ex) {
+            System.out.println("Failed to save \'" + path + "\': " + ex.getMessage());
+        }
+    }
 }
