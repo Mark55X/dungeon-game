@@ -2,14 +2,16 @@ package com.onn.dungeongame.states;
 
 import com.onn.dungeongame.Handler;
 import com.onn.dungeongame.entities.creature.Player;
+import com.onn.dungeongame.gfx.Assets;
+import com.onn.dungeongame.gfx.DialogManager;
 import com.onn.dungeongame.world.World;
 
 import java.awt.*;
 
 public class PlayState extends State {
 
-	public World world;
-	public Player player;
+	private World world;
+	private Player player;
 
 	public PlayState() {
 		init();
@@ -20,7 +22,8 @@ public class PlayState extends State {
 		Handler.setPlayer(player);
 
 		world = new World();
-		world.loadWorld(PlayState.class.getResource("/worlds/level_1"));
+		world.loadWorld("/home/taxy/worlds/w0m0l0");
+		world.loadItemWorld("/home/taxy/worlds/w0m0l0t");
 		world.getEntityManager().addEntity(player);
 	}
 

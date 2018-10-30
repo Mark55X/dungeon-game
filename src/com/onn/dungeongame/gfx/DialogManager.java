@@ -43,34 +43,58 @@ public class DialogManager {
 
 			if(stringWidth + Dialog.DEFAULT_LINE_MARGIN_RIGHT + currentSpace > availableSpace) {
 				rows++;
+
 				if(rows == availableRows) {
 					Dialog dialog = new Dialog(font, bounds);
-					dialog.setString(text);
+					dialog.setString(tmp);
 					dialog.setLineMarginTop(marginTop);
 					dialogs.add(dialog);
+
 					rows = 0;
 					tmp = "";
 					currentSpace = 0;
 				}
 
 				tmp += splitLines[i];
+				if(i < splitLines.length - 1) {
+					tmp += " ";
+					currentSpace += Toolkit.getDefaultToolkit().getFontMetrics(font).charWidth(' ');
+				} else {
+					Dialog dialog = new Dialog(font, bounds);
+					dialog.setString(tmp);
+					dialog.setLineMarginTop(marginTop);
+					dialogs.add(dialog);
+
+					rows = 0;
+					tmp = "";
+					currentSpace = 0;
+				}
 				currentSpace += stringWidth;
 			} else {
 				tmp += splitLines[i];
 				if(i < splitLines.length - 1) {
 					tmp += " ";
+				} else {
+					Dialog dialog = new Dialog(font, bounds);
+					dialog.setString(tmp);
+					dialog.setLineMarginTop(marginTop);
+					dialogs.add(dialog);
+
+					rows = 0;
+					tmp = "";
+					currentSpace = 0;
 				}
 				currentSpace += stringWidth;
 			}
 
 			if(rows == availableRows) {
-				rows = 0;
 				Dialog dialog = new Dialog(font, bounds);
-				dialog.setString(text);
+				dialog.setString(tmp);
 				dialog.setLineMarginTop(marginTop);
 				dialogs.add(dialog);
 				tmp = "";
 				currentSpace = 0;
+				rows = 0;
 			}
 		}
 

@@ -1,8 +1,10 @@
 package com.onn.dungeongame.states;
 
+import com.onn.dungeongame.Handler;
+import com.onn.dungeongame.gfx.Assets;
+import com.onn.dungeongame.gfx.Text;
+
 import java.awt.*;
-import com.onn.dungeongame.*;
-import com.onn.dungeongame.gfx.*;
 
 public class MenuState extends State {
 	@Override
